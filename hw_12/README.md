@@ -106,11 +106,11 @@ call enemy_marker(2, 1, 'enemy');
 
 Зашёл в контейнер от рута и выполнил команду по вставки данных из csv.
 
-	```
+	
     docker exec -it ceed0ae6dca2 /bin/bash
 
 
 	mysqlimport --fields-enclosed-by='"' --fields-terminated-by=',' --lines-terminated-by='\n' --ignore-lines=1 --user="root" --password="12345" otus_hw /jewelry.csv
-	```
+	
 
 ![](2.png)
