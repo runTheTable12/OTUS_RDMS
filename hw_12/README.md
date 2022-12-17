@@ -89,10 +89,9 @@ call enemy_marker(2, 1, 'enemy');
   Google_Shopping_Custom_Label_3 varchar(100),
   Google_Shopping_Custom_Label_4 varchar(100),
   Variant_Image varchar(1000),
-  Variant_Weight_Unit varchar(100)
-);
+  Variant_Weight_Unit varchar(100));
 	```
-	И затем загрузил csv в таблицу.
+И затем загрузил csv в таблицу.
 
 	```
     LOAD DATA INFILE '/jewelry.csv'
