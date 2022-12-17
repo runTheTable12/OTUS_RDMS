@@ -104,7 +104,7 @@ call enemy_marker(2, 1, 'enemy');
 ![](1.png)
 	- mysqlimport
 
-	Зашёл в контейнер от рута и выполнил команду по вставки данных из csv.
+Зашёл в контейнер от рута и выполнил команду по вставки данных из csv.
 
 	```
     docker exec -it ceed0ae6dca2 /bin/bash
