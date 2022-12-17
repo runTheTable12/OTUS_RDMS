@@ -46,5 +46,8 @@ CREATE FULLTEXT INDEX products_desc_idx ON products(description);
 
 Теперь сделаем выборку. Интересно, сколько из трёх записей содердит слово *database*? У меня есть предположение, что две записи, но и в описании к книге по питону также может быть упомянуто данное слово. 
 
+```
+select description from products where MATCH(description) AGAINST ('database');
+```
 ![](1.png)
 ![](2.png)
