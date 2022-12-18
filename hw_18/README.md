@@ -6,7 +6,24 @@
 Создадим следующий запрос
 
 ```
-select * from (select lastName, firstName, jobTitle, reportsTo, country, phone from employees e left join offices o ON e.officeCode = o.officeCode) t where country = 'USA' and jobTitle like 'Sale%' and phone like '%8%' and country in ('USA', 'UK') and reportsTo in (select employeeNumber from employees where email like '%tt%');
+SELECT * 
+FROM
+(SELECT 
+  lastName, 
+  firstName, 
+  jobTitle, 
+  reportsTo, 
+  country, 
+  phone 
+FROM employees e 
+LEFT JOIN offices o 
+ON e.officeCode = o.officeCode) t 
+WHERE country = 'USA' 
+AND jobTitle LIKE 'Sale%' 
+AND phone LIKE '%8%' 
+AND country IN ('USA', 'UK') 
+AND reportsTo IN (
+                SELECT employeeNumber FROM employees WHERE email LIKE '%tt%');
 ```
 
 На мой взгляд, подзапросы замедляют работу чтения.
@@ -25,7 +42,23 @@ CREATE FULLTEXT INDEX emp_jobTitle_idx ON employees(jobTitle);
 В результате получился такой запрос. Результат выборки одинаков с первоначальным.
 
 ```
-select e.lastName, e.firstName, e.jobTitle, e.reportsTo, country, phone from employees e left join offices o ON e.officeCode = o.officeCode left join employees e2 ON e.employeeNumber = e2.reportsTo where o.country = 'USA' and e.jobTitle like 'Sale%' and phone like '%8%' and e2.email like '%tt%';
+SELECT 
+  e.lastName, 
+  e.firstName, 
+  e.jobTitle, 
+  e.reportsTo, 
+  country, 
+  phone 
+FROM employees e 
+LEFT JOIN offices o 
+ON e.officeCode = o.officeCode 
+LEFT JOIN employees e2 
+ON e.employeeNumber = e2.reportsTo 
+WHERE o.country = 'USA' 
+AND e.jobTitle LIKE 'Sale%' 
+AND phone LIKE '%8%' 
+AND e2.email like '%tt%';
 ```
 
-В итоге, запрос стал ещё дольше. Результаты можно посмотреть здесь [до](explain_before.json) и здесь [после](explain_after.json)
+В итоге, запрос стал ещё дольше. Результаты можно посмотреть здесь [до](explain_before.json) и здесь [после](explain_after.json) 
+Также пробовал поменять LEFT JOIN на INNER JOIN, но EXPLAIN оказался таким же. 
